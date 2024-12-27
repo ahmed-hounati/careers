@@ -3,22 +3,14 @@ import ApplicationModel from "@/models/ApplicationModel";
 import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import { JwtPayload } from "@/types/jwt/jwtPayload";
-import UserModel from "@/models/UserModel";
-import { Types } from "mongoose";
-
-interface ApplicationBody {
-  jobId: number;
-  userId: string;
-}
+import minioClient from "@/config/Minio";
+import { v4 as uuidv4 } from "uuid";
 
 export async function POST(req: Request): Promise<NextResponse> {
-  const { jobId }: ApplicationBody = await req.json();
   const authHeader = req.headers.get("Authorization");
-
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    console.error("Authorization header missing or malformed");
     return NextResponse.json(
-      { message: "all felids are required" },
+      { message: "Authorization header missing or malformed" },
       { status: 401 }
     );
   }
@@ -27,36 +19,63 @@ export async function POST(req: Request): Promise<NextResponse> {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload;
     const userId = decoded.userId;
-    if (!jobId || !userId) {
+
+    const formData = await req.formData();
+    const jobId = Number(formData.get("jobId"));
+    const cvFile = formData.get("cv") as File | null;
+
+    if (!jobId || !userId || !cvFile) {
       return NextResponse.json(
-        { message: "all felids are required" },
+        { message: "All fields are required, including CV" },
         { status: 400 }
       );
     }
 
     await connectDB();
 
-    const application = await ApplicationModel.find({ jobId, userId });
-    if (!application) {
+    // Check if the user already applied
+    const existingApplication = await ApplicationModel.findOne({
+      jobId,
+      userId,
+    });
+    if (existingApplication) {
       return NextResponse.json(
-        {
-          message: "You are already applied to this job",
-        },
+        { message: "You have already applied for this job" },
         { status: 400 }
       );
     }
 
-    const newApp = new ApplicationModel({ jobId, userId });
-    newApp.save();
+    // Upload CV to MinIO
+    const bucketName = "job-applications";
+    const objectName = `cv-${uuidv4()}-${cvFile.name}`;
+
+    // Ensure the bucket exists
+    const bucketExists = await minioClient.bucketExists(bucketName);
+    if (!bucketExists) {
+      await minioClient.makeBucket(bucketName, "us-east-1");
+    }
+
+    // Convert the CV file to a buffer
+    const cvBuffer = Buffer.from(await cvFile.arrayBuffer());
+
+    // Upload to MinIO
+    await minioClient.putObject(bucketName, objectName, cvBuffer);
+
+    // Create the new job application
+    const application = new ApplicationModel({
+      jobId,
+      userId,
+      cvUrl: `${process.env.MINIO_BASE_URL}/${bucketName}/${objectName}`,
+    });
+
+    await application.save();
 
     return NextResponse.json(
-      { message: "job applied successfully" },
-      {
-        status: 201,
-      }
+      { message: "Job applied successfully" },
+      { status: 201 }
     );
   } catch (error) {
-    console.error("Login error:", error);
+    console.error("Application error:", error);
     return NextResponse.json(
       { message: "Internal server error" },
       { status: 500 }
