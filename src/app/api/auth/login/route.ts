@@ -46,9 +46,13 @@ export async function POST(req: Request): Promise<NextResponse> {
     }
 
     // Generate JWT token
-    const token = jwt.sign({ email: user.email }, JWT_SECRET as string, {
-      expiresIn: "1h",
-    });
+    const token = jwt.sign(
+      { userId: user._id, email: user.email },
+      JWT_SECRET as string,
+      {
+        expiresIn: "1h",
+      }
+    );
 
     const response = NextResponse.json(
       { message: "Login successful", token: token },
