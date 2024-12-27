@@ -3,6 +3,7 @@ import mongoose, { Model, Schema, Types } from "mongoose";
 interface Application {
   jobId: number;
   userId: Types.ObjectId;
+  cvUrl: string;
 }
 
 const ApplicationSchema: Schema<Application> = new Schema(
@@ -14,6 +15,9 @@ const ApplicationSchema: Schema<Application> = new Schema(
     userId: {
       type: Schema.Types.ObjectId,
       ref: "User",
+    },
+    cvUrl: {
+      type: String,
     },
   },
   { timestamps: true }
