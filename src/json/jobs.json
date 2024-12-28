@@ -75,7 +75,7 @@
         "postedAt": "2024-12-05"
     },
     {
-        "id": 1,
+        "id": 6,
         "title": "Software Engineer",
         "company": "Tech Innovations Inc.",
         "location": "San Francisco, CA",
@@ -90,7 +90,7 @@
         "postedAt": "2024-12-01"
     },
     {
-        "id": 2,
+        "id": 7,
         "title": "Data Scientist",
         "company": "Data Insights LLC",
         "location": "Remote",
@@ -105,7 +105,7 @@
         "postedAt": "2024-12-15"
     },
     {
-        "id": 3,
+        "id": 8,
         "title": "UI/UX Designer",
         "company": "Creative Solutions",
         "location": "New York, NY",
@@ -120,7 +120,7 @@
         "postedAt": "2024-12-20"
     },
     {
-        "id": 4,
+        "id": 9,
         "title": "DevOps Engineer",
         "company": "CloudTech",
         "location": "Austin, TX",
@@ -135,7 +135,7 @@
         "postedAt": "2024-12-10"
     },
     {
-        "id": 5,
+        "id": 10,
         "title": "Marketing Specialist",
         "company": "Brand Builders",
         "location": "Los Angeles, CA",

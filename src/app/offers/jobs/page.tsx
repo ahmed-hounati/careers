@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import jobOffers from "../../../../json/jobs.json";
+import jobOffers from "@/json/jobs.json";
 import OfferCard from "@/components/OfferCard";
 
 const Page: React.FC = () => {
