@@ -4,18 +4,17 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import Link from "next/link";
 
-const SignupPage: React.FC = () => {
+const LoginPage: React.FC = () => {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
-    const [username, setUsername] = useState<string>("");
     const [message, setMessage] = useState<string>("");
     const [error, setError] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
     const router = useRouter();
 
     const validateInputs = (): boolean => {
-        if (!email || !password || !username) {
-            setError("All fields (email, username, password) are required.");
+        if (!email || !password) {
+            setError("Both email and password are required.");
             return false;
         }
         if (!/\S+@\S+\.\S+/.test(email)) {
@@ -25,7 +24,7 @@ const SignupPage: React.FC = () => {
         return true;
     };
 
-    const handleSignup = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
+    const handleLogin = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
         setMessage("");
         setError("");
@@ -37,13 +36,12 @@ const SignupPage: React.FC = () => {
         }
 
         try {
-            const response = await axios.post("/api/auth/signup", {
+            const response = await axios.post("/api/auth/login", {
                 email,
-                username,
                 password,
             });
 
-            setMessage("Signup successful!");
+            setMessage("Login successful!");
             setError("");
             router.push("/dashboard");
         } catch (err: unknown) {
@@ -61,25 +59,14 @@ const SignupPage: React.FC = () => {
     return (
         <main className="mx-auto p-8 flex h-[100vh] w-full items-center justify-center text-white bg-[#141A28]">
             <section className="flex w-[30rem] flex-col space-y-10 overflow-hidden">
-                <div className="text-center text-4xl font-medium">Sign Up</div>
+                <div className="text-center text-4xl font-medium">Log In</div>
 
-                {error && (
-                    <div className="text-red-500 text-sm text-center">{error}</div>
-                )}
+                {error && <div className="text-red-500 text-sm text-center">{error}</div>}
                 {message && (
                     <div className="text-green-500 text-sm text-center">{message}</div>
                 )}
 
-                <form className="flex flex-col gap-7" onSubmit={handleSignup}>
-                    <div className="w-full transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-[#00b140]">
-                        <input
-                            type="text"
-                            placeholder="Username"
-                            className="w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
-                        />
-                    </div>
+                <form className="flex flex-col gap-7" onSubmit={handleLogin}>
                     <div className="w-full transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-[#00b140]">
                         <input
                             type="email"
@@ -108,13 +95,13 @@ const SignupPage: React.FC = () => {
                             : "bg-[#00b140] hover:bg-[#409C3E]"
                             }`}
                     >
-                        {loading ? "Signing up..." : "SIGN UP"}
+                        {loading ? "Logging in..." : "LOG IN"}
                     </button>
                 </form>
                 <div className="flex flex-row justify-end items-center">
-                    <p>Have an account ?</p>
-                    <Link href={"login"} className="text-[#00b140]">
-                        Login
+                    <p>D'ont have an account ?</p>
+                    <Link href={"signup"} className="text-[#00b140]">
+                        SignUp
                     </Link>
                 </div>
             </section>
@@ -122,4 +109,4 @@ const SignupPage: React.FC = () => {
     );
 };
 
-export default SignupPage;
+export default LoginPage;
