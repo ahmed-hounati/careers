@@ -23,6 +23,8 @@ export async function POST(req: Request): Promise<NextResponse> {
     const formData = await req.formData();
     const jobId = Number(formData.get("jobId"));
     const cvFile = formData.get("cv") as File | null;
+    const letter = formData.get("letter") as string;
+
 
     if (!jobId || !userId || !cvFile) {
       return NextResponse.json(
@@ -65,6 +67,7 @@ export async function POST(req: Request): Promise<NextResponse> {
     const application = new ApplicationModel({
       jobId,
       userId,
+      letter,
       cvUrl: `${process.env.MINIO_BASE_URL}/${bucketName}/${objectName}`,
     });
 
