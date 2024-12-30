@@ -1,11 +1,21 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import jobOffers from "@/json/jobs.json";
 import OfferCard from "@/components/OfferCard";
+import { useRouter } from "next/navigation";
+import Cookie from "js-cookie";
 
 const Page: React.FC = () => {
     const [selectedType, setSelectedType] = useState<string>("");
     const [searchQuery, setSearchQuery] = useState<string>("");
+    const router = useRouter();
+
+    useEffect(() => {
+        const token = Cookie.get("token");
+        if (!token) {
+            router.push("/auth/login");
+        }
+    }, [router]);
 
     const handleTypeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedType(event.target.value);
