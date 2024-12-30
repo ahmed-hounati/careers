@@ -4,6 +4,7 @@ interface Application {
   jobId: number;
   userId: Types.ObjectId;
   cvUrl: string;
+  letter: string;
 }
 
 const ApplicationSchema: Schema<Application> = new Schema(
@@ -17,6 +18,9 @@ const ApplicationSchema: Schema<Application> = new Schema(
       ref: "User",
     },
     cvUrl: {
+      type: String,
+    },
+    letter: {
       type: String,
     },
   },
