@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Job Application System
 
-## Getting Started
+## Project Context
 
-First, run the development server:
+This project provides a web application for managing job offers, applications, and user authentication. It includes features for job seekers to browse job offers, apply to jobs, and track the status of their applications. It also includes an admin interface for managing applications and reviewing candidate statuses.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+#### 1. **Job Offers Consultation**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Display a list of available job offers by consuming an external API.
+- Allow users to search and filter job offers by title, location, contract type, etc.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+#### 2. **Job Application Management**
 
-## Learn More
+- User registration and login functionality.
+- Directly apply to job offers from the application.
+- Track the status of applications (Pending, Accepted, Rejected).
 
-To learn more about Next.js, take a look at the following resources:
+#### 3. **Admin Panel**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Administrators can view received applications.
+- Admins can add notes or update the status of applications.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+#### 4. **Server-Side Rendering (SSR)**
 
-## Deploy on Vercel
+- Utilizes SSR for displaying individual application details and listing applications.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+#### 5. **API Conventions**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Follows RESTful API conventions with pagination support (`page`, `size`, `offset`).
+
+## Technologies Used
+
+- **Framework**: Next.js
+- **UI**: Tailwind CSS
+- **State Management**: React Context / Redux
+- **Database**: MongoDB with Mongoose (or PostgreSQL)
+- **Authentication**: JWT (JSON Web Token) or third-party service
+- **CI/CD**: GitHub Actions or GitLab CI
+- **API Testing**: Jest, Supertest
+- **API Documentation**: Swagger
+
+## Setup Instructions
+
+### Prerequisites
+
+- Node.js (v14+)
+- npm or yarn
+- MongoDB or PostgreSQL (depending on your configuration)
+
+### Steps to Run the Project Locally
+
+1. **Clone the repository**:
+
+   ```bash
+   git clone https://github.com/your-repo/job-application-system.git
+   cd job-application-system
+   ```
