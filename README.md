@@ -49,6 +49,6 @@ This project provides a web application for managing job offers, applications, a
 1. **Clone the repository**:
 
    ```bash
-   git clone https://github.com/carears/carears.git
-   cd job-application-system
+   git clone https://github.com/ahmed-hounati/careers.git
+   cd careers
    ```
