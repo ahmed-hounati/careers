@@ -26,6 +26,10 @@ const JobDetails = ({ params }: { params: { id: number } }) => {
     useEffect(() => {
         const tokenValue = Cookie.get("token");
         setToken(tokenValue);
+        const token = Cookie.get("token");
+        if (!token) {
+            router.push("/auth/login");
+        }
     }, []);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
