@@ -24,7 +24,7 @@ export async function POST(req: Request): Promise<NextResponse> {
     const jobId = Number(formData.get("jobId"));
     const cvFile = formData.get("cv") as File | null;
     const letter = formData.get("letter") as string;
-
+    const status = "waiting";
 
     if (!jobId || !userId || !cvFile) {
       return NextResponse.json(
@@ -68,6 +68,7 @@ export async function POST(req: Request): Promise<NextResponse> {
       jobId,
       userId,
       letter,
+      status: status,
       cvUrl: `${process.env.MINIO_BASE_URL}/${bucketName}/${objectName}`,
     });
 
