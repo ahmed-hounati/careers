@@ -1,4 +1,4 @@
-# Job Application System
+# Careers
 
 ## Project Context
 
@@ -17,16 +17,11 @@ This project provides a web application for managing job offers, applications, a
 - Directly apply to job offers from the application.
 - Track the status of applications (Pending, Accepted, Rejected).
 
-#### 3. **Admin Panel**
-
-- Administrators can view received applications.
-- Admins can add notes or update the status of applications.
-
-#### 4. **Server-Side Rendering (SSR)**
+#### 3. **Server-Side Rendering (SSR)**
 
 - Utilizes SSR for displaying individual application details and listing applications.
 
-#### 5. **API Conventions**
+#### 4. **API Conventions**
 
 - Follows RESTful API conventions with pagination support (`page`, `size`, `offset`).
 
@@ -34,26 +29,26 @@ This project provides a web application for managing job offers, applications, a
 
 - **Framework**: Next.js
 - **UI**: Tailwind CSS
-- **State Management**: React Context / Redux
-- **Database**: MongoDB with Mongoose (or PostgreSQL)
-- **Authentication**: JWT (JSON Web Token) or third-party service
-- **CI/CD**: GitHub Actions or GitLab CI
-- **API Testing**: Jest, Supertest
-- **API Documentation**: Swagger
+- **State Management**: React Context
+- **Database**: MongoDB with Mongoose
+- **Authentication**: JWT (JSON Web Token)
+- **CI/CD**: GitHub Actions
+- **API Testing**: Jest
+- **API Documentation**: PostMan
 
 ## Setup Instructions
 
 ### Prerequisites
 
 - Node.js (v14+)
-- npm or yarn
-- MongoDB or PostgreSQL (depending on your configuration)
+- npm
+- MongoDB
 
 ### Steps to Run the Project Locally
 
 1. **Clone the repository**:
 
    ```bash
-   git clone https://github.com/your-repo/job-application-system.git
+   git clone https://github.com/carears/carears.git
    cd job-application-system
    ```
