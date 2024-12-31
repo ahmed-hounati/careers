@@ -5,6 +5,7 @@ interface Application {
   userId: Types.ObjectId;
   cvUrl: string;
   letter: string;
+  status: string;
 }
 
 const ApplicationSchema: Schema<Application> = new Schema(
@@ -21,6 +22,9 @@ const ApplicationSchema: Schema<Application> = new Schema(
       type: String,
     },
     letter: {
+      type: String,
+    },
+    status: {
       type: String,
     },
   },
