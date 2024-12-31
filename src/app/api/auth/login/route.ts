@@ -6,10 +6,6 @@ import jwt from "jsonwebtoken";
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
-if (!JWT_SECRET) {
-  throw new Error("Please define the JWT_SECRET environment variable");
-}
-
 interface LoginRequestBody {
   email: string;
   password: string;
