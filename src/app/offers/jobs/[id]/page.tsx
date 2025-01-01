@@ -13,15 +13,8 @@ const JobDetails = ({ params }: { params: { id: number } }) => {
     const [token, setToken] = useState<string | undefined>(undefined);
     const [message, setMessage] = useState<string>("");
     const [alertClass, setAlertClass] = useState<string>("");
-
     const router = useRouter();
 
-    const offerId = params.id;
-    const offer: Offer | undefined = jobOffers.find((job) => job.id == offerId);
-
-    if (!offer) {
-        return <p className="text-center text-red-500">Offer not found!</p>;
-    }
 
     useEffect(() => {
         const tokenValue = Cookie.get("token");
@@ -30,7 +23,14 @@ const JobDetails = ({ params }: { params: { id: number } }) => {
         if (!token) {
             router.push("/auth/login");
         }
-    }, []);
+    }, [router]);
+
+    const offerId = params.id;
+    const offer: Offer | undefined = jobOffers.find((job) => job.id == offerId);
+
+    if (!offer) {
+        return <p className="text-center text-red-500">Offer not found!</p>;
+    }
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -66,9 +66,10 @@ const JobDetails = ({ params }: { params: { id: number } }) => {
                 setAlertClass("bg-red-500 text-white p-3 rounded-md");
                 setMessage(response.data.message || "An error occurred.");
             }
-        } catch (error) {
+        } catch (error: unknown) {
+            const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
             setAlertClass("bg-red-500 text-white p-3 rounded-md");
-            setMessage("Failed to submit application. Please try again.");
+            setMessage(`Failed to submit application: ${errorMessage}`);
         }
     };
 

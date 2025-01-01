@@ -36,7 +36,7 @@ const LoginPage: React.FC = () => {
         }
 
         try {
-            const response = await axios.post("/api/auth/login", {
+            await axios.post("/api/auth/login", {
                 email,
                 password,
             });
@@ -99,7 +99,7 @@ const LoginPage: React.FC = () => {
                     </button>
                 </form>
                 <div className="flex flex-row justify-end items-center">
-                    <p>D'ont have an account ?</p>
+                    <p>D ont have an account ?</p>
                     <Link href={"signup"} className="text-[#00b140]">
                         SignUp
                     </Link>

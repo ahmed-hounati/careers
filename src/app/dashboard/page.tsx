@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import Cookie from "js-cookie";
 import { useRouter } from "next/navigation";
@@ -12,7 +12,7 @@ const Dashboard: React.FC = () => {
         if (!token) {
             router.push("/auth/login");
         }
-    }, [router]);
+    });
     return (
         <section className="text-white h-[100vh] p-5 bg-[#141A28]">
             <h1 className="text-3xl text-center font-bold pt-10">Dashboard</h1>

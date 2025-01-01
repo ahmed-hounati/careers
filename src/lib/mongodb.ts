@@ -1,8 +1,13 @@
-import mongoose, { ConnectOptions, Connection } from "mongoose";
+import mongoose, { Connection, ConnectOptions } from "mongoose";
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
-export async function connectDB(): Promise<Connection> {
+export async function connectDB(): Promise<Connection | null> {
+  if (process.env.IS_BUILD === "true") {
+    console.log("Skipping MongoDB connection during the build process");
+    return null;
+  }
+
   try {
     const opts: ConnectOptions = {
       bufferCommands: false,
@@ -13,17 +18,15 @@ export async function connectDB(): Promise<Connection> {
     console.log("MongoDB Connected Successfully!");
     console.log("Connected to MongoDB:", conn.connection.host);
 
-    // Listen for connection errors
+    // Listen for connection events
     mongoose.connection.on("error", (err: Error) => {
       console.error("MongoDB connection error:", err);
     });
 
-    // Listen for disconnection
     mongoose.connection.on("disconnected", () => {
       console.log("MongoDB disconnected");
     });
 
-    // Listen for successful reconnection
     mongoose.connection.on("reconnected", () => {
       console.log("MongoDB reconnected");
     });
