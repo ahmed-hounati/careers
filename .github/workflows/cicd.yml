@@ -52,14 +52,3 @@ jobs:
         run: |
           docker build -t ahmed1mvc/careers:latest .
           docker push ahmed1mvc/careers:latest
-
-      - name: Deploy to Server
-        uses: appleboy/ssh-action@v0.1.6
-        with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SERVER_SSH_KEY }}
-          script: |
-            docker pull ahmed1mvc/careers:latest
-            docker stop careers || true
-            docker run -d --name careers -p 80:3000 ahmed1mvc/careers:latest
