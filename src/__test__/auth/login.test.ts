@@ -99,6 +99,9 @@ describe("Login API", () => {
   });
 
   it("should handle internal server errors", async () => {
+    const consoleErrorSpy = jest
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
     (UserModel.findOne as jest.Mock).mockRejectedValue(
       new Error("Database error")
     );
@@ -117,5 +120,11 @@ describe("Login API", () => {
 
     expect(response.status).toBe(500);
     expect(responseBody).toEqual({ message: "Internal server error" });
+    expect(consoleErrorSpy).toHaveBeenCalledWith(
+      "Login error:",
+      expect.any(Error)
+    );
+
+    consoleErrorSpy.mockRestore();
   });
 });
