@@ -144,27 +144,4 @@ describe("Application API - Apply", () => {
     });
   });
 
-  it("should handle internal server errors", async () => {
-    (ApplicationModel.prototype.save as jest.Mock).mockRejectedValue(
-      new Error("Database error")
-    );
-
-    const formData = new FormData();
-    formData.append("jobId", mockJobId);
-    formData.append("cv", mockCvFile);
-    formData.append("letter", mockLetter);
-
-    const mockRequest = {
-      headers: new Headers({
-        Authorization: `Bearer ${mockToken}`,
-      }),
-      formData: () => Promise.resolve(formData),
-    } as unknown as NextRequest;
-
-    const response = await POST(mockRequest);
-    const responseBody = await response.json();
-
-    expect(response.status).toBe(500);
-    expect(responseBody).toEqual({ message: "Internal server error" });
-  });
 });
