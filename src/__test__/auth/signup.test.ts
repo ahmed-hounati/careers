@@ -25,7 +25,11 @@ describe("Signup API", () => {
     (jwt.sign as jest.Mock).mockReturnValue(mockToken);
     (connectDB as jest.Mock).mockResolvedValue(undefined);
     (UserModel.findOne as jest.Mock).mockResolvedValue(null);
-    (UserModel.prototype.save as jest.Mock).mockResolvedValue({});
+    (UserModel.prototype.save as jest.Mock).mockResolvedValue({
+      email: mockEmail,
+      username: mockUsername,
+      password: mockHashedPassword,
+    });
   });
 
   it("should return 400 if required fields are missing", async () => {
@@ -67,6 +71,9 @@ describe("Signup API", () => {
   });
 
   it("should handle internal server errors", async () => {
+    const consoleErrorSpy = jest
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
     (UserModel.prototype.save as jest.Mock).mockRejectedValue(
       new Error("Database error")
     );
@@ -86,5 +93,11 @@ describe("Signup API", () => {
 
     expect(response.status).toBe(500);
     expect(responseBody).toEqual({ message: "Internal server error" });
+    expect(consoleErrorSpy).toHaveBeenCalledWith(
+      "Signup error:",
+      expect.any(Error)
+    );
+
+    consoleErrorSpy.mockRestore();
   });
 });
