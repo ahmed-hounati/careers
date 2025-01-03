@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button"
+import Image from "next/image"
 
 export function HeroSection() {
     return (
@@ -23,7 +24,7 @@ export function HeroSection() {
                     </div>
                     <div className="relative">
                         <div className="absolute inset-0 bg-gradient-to-r from-emerald-700 to-transparent lg:hidden" />
-                        <img
+                        <Image
                             src="/placeholder.svg?height=400&width=500"
                             alt="Remote work illustration"
                             className="w-full h-auto rounded-lg"
