@@ -6,7 +6,7 @@ const Navbar: React.FC = () => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
     return (
-        <nav className="bg-slate-600 bg-opacity-75 top-0 left-0 right-0 z-50">
+        <nav className="bg-[#141A28] top-0 left-0 right-0 z-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16">
                     <div className="flex items-center">
